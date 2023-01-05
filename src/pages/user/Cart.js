@@ -207,7 +207,7 @@ function Cart() {
         },
       }
       await API.delete(`/order/${id}`, config)
-      refetch()
+      orderRefetch()
     } catch (error) {
       console.log(error)
     }
