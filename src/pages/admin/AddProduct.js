@@ -54,7 +54,7 @@ function AddProduct() {
   // const [photoProduct, setPhotoProduct] = React.useState(<p>Image Product</p>)
   const [preview, setPreview] = useState(null)
   const [DataProduct, setDataProduct] = useState({
-    nameproduct: "",
+    name_product: "",
     price: 0,
     image: "",
   })
@@ -94,12 +94,12 @@ function AddProduct() {
 
       // Store data with FormData as object
       const formData = new FormData()
-      formData.set("nameproduct", DataProduct.nameproduct)
+      formData.set("name_product", DataProduct.name_product)
       formData.set("price", DataProduct.price)
       formData.set(
         "image",
         DataProduct.image[0],
-        DataProduct.image[0].nameproduct
+        DataProduct.image[0].name_product
       )
 
       // Insert product data
@@ -129,10 +129,10 @@ function AddProduct() {
                   id="addProduct"
                   className="m-auto mt-3 d-grid gap-2 w-100"
                 >
-                  <Form.Group className="mb-3 " controlId="nameProduct">
+                  <Form.Group className="mb-3 " controlId="name_product">
                     <Form.Control
                       onChange={handleOnChange}
-                      name="nameproduct"
+                      name="name_product"
                       style={{
                         border: "2px solid #BD0707",
                         backgroundColor: "#E0C8C840",

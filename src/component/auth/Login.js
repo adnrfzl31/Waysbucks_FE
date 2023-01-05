@@ -89,13 +89,6 @@ function Login({
           payload: response.data.data,
         })
 
-        // Status check
-        if (response.data.data.role === "admin") {
-          navigate("/admin")
-        } else {
-          navigate("/")
-        }
-
         const alert = (
           <Alert variant="success" className="py-1">
             Login success
@@ -103,6 +96,7 @@ function Login({
         )
         profileRefetch()
         orderRefetch()
+        navigate("/")
         setMessage(alert)
       }
       // console.log(response)
