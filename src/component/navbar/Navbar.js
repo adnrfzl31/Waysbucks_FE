@@ -211,7 +211,7 @@ function Navs() {
   const { data: order, refetch: orderRefetch } = useQuery(
     "ordersCache",
     async () => {
-      const response = await API.get("/orders")
+      const response = await API.get("/orders-id")
       return response.data.data
     }
   )
@@ -219,7 +219,7 @@ function Navs() {
   let { data: Profile, refetch: profileRefetch } = useQuery(
     "ProfileCache",
     async () => {
-      const response = await API.get("/user/" + state.user.id)
+      const response = await API.get("/user")
       return response.data.data
     }
   )

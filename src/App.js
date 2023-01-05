@@ -18,6 +18,10 @@ import AddToping from "./pages/admin/AddToping.js"
 import TopingAdmin from "./pages/admin/TopingAdmin.js"
 import UpdateToping from "./pages/admin/UpdateToping.js"
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token)
+}
+
 function App() {
   let navigate = useNavigate()
 
