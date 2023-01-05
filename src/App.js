@@ -76,11 +76,11 @@ function App() {
         <>
           <Navs />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/DetailProduct/:id" element={<DetailProduct />} />
-            <Route path="/Carts" element={<Cart />} />
+            {/* <Route path="/" element={<Home />} /> */}
+            {/* <Route path="/DetailProduct/:id" element={<DetailProduct />} /> */}
+            {/* <Route path="/Carts" element={<Cart />} /> */}
             {/* <Route path="/Transaction" element={<Transaction />} /> */}
-            <Route path="/Profile" element={<Profile />} />
+            {/* <Route path="/Profile" element={<Profile />} /> */}
             {/* <Route path="/HistoryOrder" element={<HistoryOrder />} /> */}
             {/* <Route path="/Admin" element={<Income />} />
             <Route path="/ProductAdmin" element={<ProductAdmin />} />

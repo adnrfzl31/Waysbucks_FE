@@ -36,14 +36,14 @@ const style = {
   },
 }
 
-const Login = ({
+function Login({
   show,
   onHide,
   setShowLogin,
   setShowRegister,
   profileRefetch,
   orderRefetch,
-}) => {
+}) {
   const title = "Login"
   document.title = "Waysbucks | " + title
 

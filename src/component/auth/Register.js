@@ -84,27 +84,27 @@ function Register({ show, onHide, setShowLogin, setShowRegister }) {
       // Insert data user to database
       const response = await API.post("/register", formData, config)
       //console.log(response)
-      // if (response.data.status === "success...") {
-      //   const alert = (
-      //     <Alert variant="success" className="py-1">
-      //       Success
-      //     </Alert>
-      //   )
-      //   setMessage(alert)
-      //   setDataRegis({
-      //     name: "",
-      //     email: "",
-      //     password: "",
-      //     image: "",
-      //   })
-      // } else {
-      //   const alert = (
-      //     <Alert variant="danger" className="py-1">
-      //       Failed
-      //     </Alert>
-      //   )
-      //   setMessage(alert)
-      // }
+      if (response.data.status === "success...") {
+        const alert = (
+          <Alert variant="success" className="py-1">
+            Success
+          </Alert>
+        )
+        setMessage(alert)
+        setDataRegis({
+          name: "",
+          email: "",
+          password: "",
+          image: "",
+        })
+      } else {
+        const alert = (
+          <Alert variant="danger" className="py-1">
+            Failed
+          </Alert>
+        )
+        setMessage(alert)
+      }
       setShowRegister(false)
       setShowLogin(true)
       // Handling response here
