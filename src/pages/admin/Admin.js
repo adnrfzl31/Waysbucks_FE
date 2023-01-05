@@ -55,10 +55,8 @@ function Income() {
   const [state] = useContext(UserContext)
 
   let { data: transall, refetch } = useQuery("TransTable", async () => {
-    if (state.user.role === "admin") {
-      const response = await API.get("/transactions")
-      return response.data.data
-    }
+    const response = await API.get("/transactions")
+    return response.data.data
   })
 
   const formatIDR = new Intl.NumberFormat(undefined, {
@@ -73,7 +71,7 @@ function Income() {
   const HandleCancel = useMutation(async (id) => {
     //console.log("Cancel ID =>", id)
     try {
-      const response = await API.patch("/canceltrans/" + id)
+      const response = await API.patch("/transUpdate/" + id)
       refetch()
       //console.log(response)
     } catch (error) {
@@ -84,7 +82,7 @@ function Income() {
   const HandleAccept = useMutation(async (id) => {
     //console.log("Accept ID =>", id)
     try {
-      const response = await API.patch("/accepttrans/" + id)
+      const response = await API.patch("/transUpdate/" + id)
       refetch()
       //console.log(response)
     } catch (error) {

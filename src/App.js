@@ -80,19 +80,19 @@ function App() {
         <>
           <Navs />
           <Routes>
-            {/* <Route path="/" element={<Home />} /> */}
+            <Route path="/" element={<Home />} />
             {/* <Route path="/DetailProduct/:id" element={<DetailProduct />} /> */}
             {/* <Route path="/Carts" element={<Cart />} /> */}
             {/* <Route path="/Transaction" element={<Transaction />} /> */}
             {/* <Route path="/Profile" element={<Profile />} /> */}
             {/* <Route path="/HistoryOrder" element={<HistoryOrder />} /> */}
-            {/* <Route path="/Admin" element={<Income />} />
-            <Route path="/ProductAdmin" element={<ProductAdmin />} />
-            <Route path="/TopingAdmin" element={<TopingAdmin />} />
-            <Route path="/UpdateProduct/:id" element={<UpdateProduct />} />
-            <Route path="/UpdateToping/:id" element={<UpdateToping />} />
+            {/* <Route path="/Admin" element={<Income />} /> */}
             <Route path="/AddProduct" element={<AddProduct />} />
-            <Route path="/AddToping" element={<AddToping />} /> */}
+            {/* <Route path="/AddToping" element={<AddToping />} /> */}
+            {/* <Route path="/ProductAdmin" element={<ProductAdmin />} /> */}
+            {/* <Route path="/TopingAdmin" element={<TopingAdmin />} /> */}
+            {/* <Route path="/UpdateProduct/:id" element={<UpdateProduct />} /> */}
+            {/* <Route path="/UpdateToping/:id" element={<UpdateToping />} /> */}
           </Routes>
         </>
       )}
