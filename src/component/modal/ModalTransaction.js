@@ -117,7 +117,7 @@ export default function ModalTransaction({
                     </CardHeader>
                     <Card.Body style={{ padding: 0, marginTop: "20px" }}>
                       <CardImg src="https://www.pngmart.com/files/22/QR-Code-Transparent-Isolated-Background.png" />
-                      {TransUser.status === "Payment" ? (
+                      {TransUser.status === "pending" ? (
                         <Alert
                           key="warning"
                           variant="warning"
@@ -130,7 +130,7 @@ export default function ModalTransaction({
                         >
                           Waiting
                         </Alert>
-                      ) : TransUser.status === "Success" ? (
+                      ) : TransUser.status === "success" ? (
                         <Alert
                           key="success"
                           variant="success"
@@ -143,7 +143,7 @@ export default function ModalTransaction({
                         >
                           Success
                         </Alert>
-                      ) : TransUser.status === "Cancel" ? (
+                      ) : TransUser.status === "cancel" ? (
                         <Alert
                           key="danger"
                           variant="danger"

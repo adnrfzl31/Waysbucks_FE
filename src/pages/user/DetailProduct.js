@@ -75,17 +75,17 @@ function DetailProduct() {
     return response.data.data
   })
 
-  const [toppingCheck, setTopingCheck] = useState([]) //ID TOPING
-  const [toppingPrice, setTopingPrice] = useState([]) //HARGA TOPING
+  const [toppingCheck, setToppingCheck] = useState([0])
+  const [toppingPrice, setToppingPrice] = useState(0)
 
-  function handleChecked(id, price) {
-    let idNow = toppingCheck.filter((e) => e === id)
-    if (idNow[0] !== id) {
-      setTopingCheck([...toppingCheck, id])
-      setTopingPrice(Number(toppingPrice) + Number(price))
+  const handleChecked = (id, price) => {
+    let filterID = toppingCheck.filter((e) => e === id)
+    if (filterID[0] !== id) {
+      setToppingCheck([...toppingCheck, id])
+      setToppingPrice(toppingPrice + price)
     } else {
-      setTopingCheck(toppingCheck.filter((e) => e !== id))
-      setTopingPrice(Number(toppingPrice) - Number(price))
+      setToppingCheck(toppingCheck.filter((e) => e !== id))
+      setToppingPrice(toppingPrice - price)
     }
   }
 

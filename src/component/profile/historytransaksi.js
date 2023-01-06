@@ -12,7 +12,7 @@ import CardHeader from "react-bootstrap/esm/CardHeader"
 import { useQuery } from "react-query"
 import { API } from "../../confiq/api"
 import Logo from "../../assets/image/Logo2.png"
-import ModalTransaction from "../../component/modal/ModalTransaction"
+import ModalTransaction from "../modal/ModalTransaction"
 // import Image1 from "../assets/image/produk1.png"
 
 function HistoryOrder() {
@@ -127,7 +127,7 @@ function HistoryOrder() {
                         </CardHeader>
                         <Card.Body style={{ padding: 0, marginTop: "20px" }}>
                           <CardImg src="https://www.pngmart.com/files/22/QR-Code-Transparent-Isolated-Background.png" />
-                          {dataTransUser.status === "Payment" ? (
+                          {dataTransUser.status === "pending" ? (
                             <Alert
                               key="warning"
                               variant="warning"
@@ -140,7 +140,7 @@ function HistoryOrder() {
                             >
                               Waiting
                             </Alert>
-                          ) : dataTransUser.status === "Success" ? (
+                          ) : dataTransUser.status === "success" ? (
                             <Alert
                               key="success"
                               variant="success"
@@ -153,7 +153,7 @@ function HistoryOrder() {
                             >
                               Success
                             </Alert>
-                          ) : dataTransUser.status === "Cancel" ? (
+                          ) : dataTransUser.status === "cancel" ? (
                             <Alert
                               key="danger"
                               variant="danger"

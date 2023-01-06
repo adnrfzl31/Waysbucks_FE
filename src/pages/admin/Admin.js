@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { Container, Button, Table, Stack, Badge } from "react-bootstrap"
 import { useMutation, useQuery } from "react-query"
 import { Link } from "react-router-dom"
@@ -8,6 +8,7 @@ import { UserContext } from "../../context/UserContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
+import ModalTransaction from "../../component/modal/ModalTransaction"
 // import Approve from "../../assets/image/Approve.png"
 // import Cancel from "../../assets/image/Cancel.png"
 // import Jumbotron from "../../component/Jumbotron"
@@ -53,11 +54,21 @@ const style = {
 
 function Income() {
   const [state] = useContext(UserContext)
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+  const [dataHistoryOrder, setDataHistoryOrder] = useState({})
+
+  const handleHistoryOrder = (data) => {
+    setDataHistoryOrder(data)
+    handleShow()
+  }
 
   let { data: transall, refetch } = useQuery("TransTable", async () => {
     const response = await API.get("/transactions")
     return response.data.data
   })
+  console.log("ini data nya => ", transall)
 
   const formatIDR = new Intl.NumberFormat(undefined, {
     style: "currency",
@@ -71,7 +82,12 @@ function Income() {
   const HandleCancel = useMutation(async (id) => {
     //console.log("Cancel ID =>", id)
     try {
-      const response = await API.patch("/transUpdate/" + id)
+      const dataTransAll = {
+        status: "cancel",
+        id: id,
+      }
+
+      const response = await API.patch("/transUpdate/" + id, dataTransAll)
       refetch()
       //console.log(response)
     } catch (error) {
@@ -82,7 +98,11 @@ function Income() {
   const HandleAccept = useMutation(async (id) => {
     //console.log("Accept ID =>", id)
     try {
-      const response = await API.patch("/transUpdate/" + id)
+      const dataTransAll = {
+        status: "success",
+        id: id,
+      }
+      const response = await API.patch("/transUpdate/" + id, dataTransAll)
       refetch()
       //console.log(response)
     } catch (error) {
@@ -116,8 +136,8 @@ function Income() {
           ) : (
             transall?.map((element, number) => {
               number += 1
-              if (element.status === "Success") {
-                income += element.price
+              if (element.status === "success") {
+                income += element.total
                 //console.log("income : ", element.price)
               }
 
@@ -128,19 +148,22 @@ function Income() {
                   <td>{element.address}</td>
                   <td>{element.poscode}</td>
                   <td>
-                    <Link to="/Transaction" style={style.link}>
-                      {formatIDR.format(element.price)}
-                    </Link>
+                    <div
+                      onClick={() => handleHistoryOrder(element)}
+                      style={style.link}
+                    >
+                      {formatIDR.format(element.total)}
+                    </div>
                   </td>
-                  {element.status === "Payment" ? (
+                  {element.status === "pending" ? (
                     <label className="text-warning">Waiting Approve</label>
-                  ) : element.status === "Success" ? (
+                  ) : element.status === "success" ? (
                     <label className="text-success">Success</label>
-                  ) : element.status === "Cancel" ? (
+                  ) : element.status === "cancel" ? (
                     <label className="text-danger">Cancel</label>
                   ) : null}
                   <td>
-                    {element.status === "Payment" ? (
+                    {element.status === "pending" ? (
                       <Stack direction="horizontal" gap={3}>
                         <Button
                           variant="danger"
@@ -155,14 +178,14 @@ function Income() {
                           Accept
                         </Button>
                       </Stack>
-                    ) : element.status === "Success" ? (
+                    ) : element.status === "success" ? (
                       <Badge
                         className="rounded-circle bg-success"
                         style={{ width: "25px" }}
                       >
                         <FontAwesomeIcon icon={faCheck} />
                       </Badge>
-                    ) : element.status === "Cancel" ? (
+                    ) : element.status === "cancel" ? (
                       <Badge
                         className="rounded-circle bg-danger"
                         style={{ width: "25px" }}
@@ -183,6 +206,12 @@ function Income() {
           </tr>
         </tbody>
       </Table>
+      <ModalTransaction
+        showTrans={show}
+        closeTrans={handleClose}
+        TransUser={dataHistoryOrder}
+        formatIDR={formatIDR}
+      />
     </Container>
   )
 }

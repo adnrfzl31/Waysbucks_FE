@@ -99,8 +99,24 @@ function DropdownAdmin({ Profile, logout }) {
         <Popover id="popover-basic">
           <Popover.Body>
             <Nav.Link
-              href="/AddProduct"
+              href="/Profile"
               className="mt-2"
+              style={{
+                fontWeight: "600",
+                fontSize: "17px",
+                alignItems: "center",
+              }}
+            >
+              <img
+                alt=""
+                src={User}
+                style={{ width: "30px", marginRight: "15px" }}
+              />
+              Profile
+            </Nav.Link>
+            <Nav.Link
+              href="/AddProduct"
+              className="mt-4"
               style={{
                 fontWeight: "600",
                 fontSize: "17px",

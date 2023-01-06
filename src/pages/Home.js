@@ -2,10 +2,10 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { useContext } from "react"
 import { Container } from "react-bootstrap"
 import { UserContext } from "../context/UserContext"
-import Income from "./admin/Admin"
 import Jumbotron from "../component/home/Jumbotron"
 import Products from "../component/home/Product"
 import Navs from "../component/navbar/Navbar"
+import Income from "./admin/Admin"
 
 // import Income from "./Admin"
 // import { BrowserRouter as Router, Routes, Route, Link  } from 'react-router-dom';
