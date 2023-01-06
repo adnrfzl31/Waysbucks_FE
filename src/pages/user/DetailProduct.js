@@ -64,38 +64,32 @@ function DetailProduct() {
   })
 
   //produk
-  let { data: productdetail, refetch: productRefetch } = useQuery(
-    "productdetailCache",
-    async () => {
-      const response = await API.get("/product/" + id)
-      return response.data.data
-    }
-  )
+  let { data: productdetail } = useQuery("productdetailCache", async () => {
+    const response = await API.get("/product/" + id)
+    return response.data.data
+  })
 
-  /// toping
-  let { data: topings, refetch: topingRefetch } = useQuery(
-    "topingsCache",
-    async () => {
-      const response = await API.get("/toppings")
-      return response.data.data
-    }
-  )
+  /// topping
+  let { data: toppings } = useQuery("toppingsCache", async () => {
+    const response = await API.get("/toppings")
+    return response.data.data
+  })
 
-  const [topingCheck, setTopingCheck] = useState([]) //ID TOPING
-  const [topingPrice, setTopingPrice] = useState([]) //HARGA TOPING
+  const [toppingCheck, setTopingCheck] = useState([]) //ID TOPING
+  const [toppingPrice, setTopingPrice] = useState([]) //HARGA TOPING
 
   function handleChecked(id, price) {
-    let idNow = topingCheck.filter((e) => e === id)
+    let idNow = toppingCheck.filter((e) => e === id)
     if (idNow[0] !== id) {
-      setTopingCheck([...topingCheck, id])
-      setTopingPrice(Number(topingPrice) + Number(price))
+      setTopingCheck([...toppingCheck, id])
+      setTopingPrice(Number(toppingPrice) + Number(price))
     } else {
-      setTopingCheck(topingCheck.filter((e) => e !== id))
-      setTopingPrice(Number(topingPrice) - Number(price))
+      setTopingCheck(toppingCheck.filter((e) => e !== id))
+      setTopingPrice(Number(toppingPrice) - Number(price))
     }
   }
 
-  let subTotal = productdetail?.price + topingPrice
+  let subTotal = productdetail?.price + toppingPrice
 
   const HandleAddCart = useMutation(async (e) => {
     try {
@@ -107,18 +101,38 @@ function DetailProduct() {
         },
       }
 
+      // const data = {
+      //   qty: 1,
+      //   subtotal: subTotal,
+      //   product_id: productdetail.id,
+      //   topping_id: toppingCheck,
+      // }
+
       const data = {
-        qty: 1,
-        subtotal: subTotal,
+        buyer_id: state.user.id,
         product_id: productdetail.id,
-        toping_id: topingCheck,
+        topping_id: toppingCheck,
       }
+      const datatrans = {
+        user_id: state.user.id,
+      }
+
+      const bodytrans = JSON.stringify(datatrans)
+      const response = await API.get("/my-order")
+
+      await API.post("/transaction", bodytrans)
 
       const body = JSON.stringify(data)
 
-      const respone = await API.post("/order/" + productdetail.id, body, config)
-      //console.log("respon Order :", respone)
+      await API.post("/order", body, config)
+
       navigate("/Carts")
+
+      // const body = JSON.stringify(data)
+
+      // const respone = await API.post("/order/" + productdetail.id, body, config)
+      // //console.log("respon Order :", respone)
+      // navigate("/Carts")
     } catch (error) {
       console.log(error)
     }
@@ -151,25 +165,25 @@ function DetailProduct() {
               <Card.Text style={style.cardText}>Toping</Card.Text>
               <Row xs="4" className="m-2">
                 {/* Toping */}
-                {topings?.map((toping) => (
+                {toppings?.map((topping) => (
                   <div
-                    key={toping?.id}
+                    key={topping?.id}
                     className="p-3"
-                    onClick={() => handleChecked(toping?.id, toping?.price)}
+                    onClick={() => handleChecked(topping?.id, topping?.price)}
                   >
                     <div className="position-relative">
                       <Card.Img
                         alt=""
                         style={style.imgToping}
-                        src={toping?.image}
+                        src={topping?.image}
                       />
                       <Badge
                         style={{ top: "10%", left: "65%" }}
                         className="position-absolute translate-middle bg-success p-0   border border-light rounded-circle"
                       >
-                        {topingCheck.filter(
-                          (Element) => Element === toping?.id
-                        )[0] === toping?.id ? (
+                        {toppingCheck.filter(
+                          (Element) => Element === topping?.id
+                        )[0] === topping?.id ? (
                           <img alt="" style={{ width: "20px" }} src={Approve} />
                         ) : (
                           <></>
@@ -178,10 +192,10 @@ function DetailProduct() {
                     </div>
                     {/* <Card.Img alt="" style={style.imgToping} src={ListToping.order} /> */}
                     <Card.Text className="m-0" style={style.textToping}>
-                      {toping?.nametoping}
+                      {topping?.nametopping}
                     </Card.Text>
                     <Card.Text style={style.textToping}>
-                      {formatIDR.format(toping?.price)}
+                      {formatIDR.format(topping?.price)}
                     </Card.Text>
                   </div>
                 ))}
@@ -262,17 +276,17 @@ export default DetailProduct
 //   maximumFractionDigits: 0,
 // })
 
-// const [topingCheck, setTopingCheck] = useState([])
-// const [topingPrice, setTopingPrice] = useState(0)
+// const [toppingCheck, setTopingCheck] = useState([])
+// const [toppingPrice, setTopingPrice] = useState(0)
 
 // const handleChecked = (id, price) => {
-//   const filterID = topingCheck.filter((e) => e === id)
+//   const filterID = toppingCheck.filter((e) => e === id)
 //   if (filterID[0] !== id) {
-//     setTopingCheck([...topingCheck, id])
-//     setTopingPrice(topingPrice + price)
+//     setTopingCheck([...toppingCheck, id])
+//     setTopingPrice(toppingPrice + price)
 //   } else {
-//     setTopingCheck(topingCheck.filter((e) => e !== id))
-//     setTopingPrice(topingPrice - price)
+//     setTopingCheck(toppingCheck.filter((e) => e !== id))
+//     setTopingPrice(toppingPrice - price)
 //   }
 // }
 
@@ -295,8 +309,8 @@ export default DetailProduct
 //   const currentProduct = {
 //     cartId: +new Date(),
 //     itemId: Product[0].id,
-//     toping: topingCheck,
-//     total: Product[0].price + topingPrice,
+//     topping: toppingCheck,
+//     total: Product[0].price + toppingPrice,
 //     isPaid: false,
 //   }
 

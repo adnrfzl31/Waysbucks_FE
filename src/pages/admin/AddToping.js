@@ -43,7 +43,7 @@ const style = {
 function AddToping() {
   const [preview, setPreview] = useState(null)
   const [DataToping, setDataToping] = useState({
-    nametoping: "",
+    nametopping: "",
     price: 0,
     image: "",
   })
@@ -76,12 +76,12 @@ function AddToping() {
 
       // Store data with FormData as object
       const formData = new FormData()
-      formData.set("nametoping", DataToping.nametoping)
+      formData.set("nametopping", DataToping.nametopping)
       formData.set("price", DataToping.price)
-      formData.set("image", DataToping.image[0], DataToping.image[0].nametoping)
+      formData.set("image", DataToping.image[0], DataToping.image[0].name)
 
       // Insert product data
-      const response = await API.post("/toping", formData, config)
+      const response = await API.post("/topping", formData, config)
       //console.log(response)
 
       // navigate("/add-product")
@@ -110,7 +110,7 @@ function AddToping() {
                   <Form.Group className="mb-3 " controlId="nameProduct">
                     <Form.Control
                       onChange={handleOnChange}
-                      name="nametoping"
+                      name="nametopping"
                       style={{
                         border: "2px solid #BD0707",
                         backgroundColor: "#E0C8C840",

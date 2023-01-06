@@ -68,7 +68,7 @@ function TopingAdmin() {
   const { data: topingAdmin, refetch } = useQuery(
     "topingAdminCache",
     async () => {
-      const res = await API.get("/topings")
+      const res = await API.get("/toppings")
       return res.data.data
     }
   )
@@ -81,7 +81,7 @@ function TopingAdmin() {
           Authorization: "Basic " + localStorage.token,
         },
       }
-      await API.delete(`/toping/${id}`, config)
+      await API.delete(`/topping/${id}`, config)
       refetch()
     } catch (error) {
       console.log(error)
@@ -118,7 +118,7 @@ function TopingAdmin() {
             {topingAdmin?.map((item, index) => (
               <tr>
                 <td>{index + 1}</td>
-                <td>{item.nametoping}</td>
+                <td>{item.nametopping}</td>
                 <td>{item.price}</td>
                 <td>
                   <img

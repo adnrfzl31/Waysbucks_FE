@@ -87,22 +87,24 @@ function Products() {
 
   return (
     <Row className="d-flex gap-4 justify-content-center">
-      {products?.map((data) => (
-        <Card
-          key={data?.id}
-          border="light"
-          style={style.card}
-          onClick={() =>
-            state.isLogin === false ? setShowLogin(true) : toDetail(data?.id)
-          }
-        >
-          <Card.Img variant="top" src={data?.image} style={style.Image} />
-          <Card.Body>
-            <Card.Title style={style.title}>{data?.nameproduct}</Card.Title>
-            <Card.Text style={style.price}>IDR {data?.price}</Card.Text>
-          </Card.Body>
-        </Card>
-      ))}
+      <div className="d-flex gap-4 justify-content-flex-start">
+        {products?.map((data) => (
+          <Card
+            key={data?.id}
+            border="light"
+            style={style.card}
+            onClick={() =>
+              state.isLogin === false ? setShowLogin(true) : toDetail(data?.id)
+            }
+          >
+            <Card.Img variant="top" src={data?.image} style={style.Image} />
+            <Card.Body>
+              <Card.Title style={style.title}>{data?.nameproduct}</Card.Title>
+              <Card.Text style={style.price}>IDR {data?.price}</Card.Text>
+            </Card.Body>
+          </Card>
+        ))}
+      </div>
       <Login
         show={showLogin}
         onHide={() => setShowLogin(false)}

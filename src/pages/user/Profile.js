@@ -13,11 +13,11 @@ import HistoryOrder from "./historytransaksi"
 function Profile() {
   // const DataLogin = JSON.parse(localStorage.getItem("VALUE_LOGIN"))
 
-  const [state] = useContext(UserContext)
+  // const [state] = useContext(UserContext)
   //console.log("Profile user : ", state)
 
   let { data: Profile, refetch } = useQuery("ProfileCache", async () => {
-    const response = await API.get("/user/" + state.user.id)
+    const response = await API.get("/user")
     return response.data.data
   })
   //console.log("data PROFILE: ", Profile)

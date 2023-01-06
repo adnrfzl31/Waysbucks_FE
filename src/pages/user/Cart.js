@@ -65,6 +65,7 @@ const style = {
 function Cart() {
   // const { id } = useParams()
   const [state] = useContext(UserContext)
+  const [checkswitch, setCheckSwitch] = useState(false)
 
   let { data: order, refetch: orderRefetch } = useQuery(
     "ordersCache",
@@ -73,35 +74,38 @@ function Cart() {
       return response.data.data
     }
   )
-  //console.log("data order: ", order)
+
+  const { data: user } = useQuery("usersCache", async () => {
+    if (state.isLogin === true) {
+      const response = await API.get("/user")
+      return response.data.data
+    }
+  })
 
   let Subtotal = 0
   let Qty = 0
-  let IDTrans = 0
+  // let IDTrans = 0
   if (state.isLogin === true) {
     order?.map(
       (element) => (
-        (Subtotal += element.subtotal),
-        (Qty += element.qty),
-        (IDTrans = element.transaction_id)
+        (Subtotal += element.total), (Qty += element.qty)
+        // (IDTrans = element.transaction_id)
       )
     )
   }
 
   //Payment
-  const [DataPay, setState] = useState({
-    name: "",
-    email: "",
+  const [dataPay, setDataPay] = useState({
+    fullname: "",
     phone: "",
-    poscode: "",
     address: "",
   })
 
   // const { name, address } = form
 
   const handleOnChange = (e) => {
-    setState({
-      ...DataPay,
+    setDataPay({
+      ...dataPay,
       [e.target.name]: e.target.value,
     })
   }
@@ -117,12 +121,28 @@ function Cart() {
           "Content-type": "application/json",
         },
       }
-      const requestBody = JSON.stringify(DataPay)
-      const response = await API.patch(
-        "/transaction/" + IDTrans,
-        requestBody,
-        config
-      )
+
+      if (dataPay.fullname != "") {
+        user.fullname = dataPay.fullname
+      }
+      if (dataPay.phone != "") {
+        user.phone = dataPay.phone
+      }
+      if (dataPay.address != "") {
+        user.address = dataPay.address
+      }
+
+      const data = {
+        ID: order[0].transaction_id,
+        Name: user.fullname,
+        Address: user.address,
+        Phone: user.phone,
+        UserID: user.id,
+        Total: Subtotal,
+        Status: "pending",
+      }
+
+      const response = await API.patch("/transaction", data, config)
       //console.log("cart : ", response)
 
       const token = response.data.data.token
@@ -149,8 +169,8 @@ function Cart() {
         },
       })
 
-      orderRefetch()
-      navigate("/")
+      // orderRefetch()
+      navigate("/profile")
       //console.log("Transaksi", response)
     } catch (error) {
       console.log(error)
@@ -184,6 +204,11 @@ function Cart() {
   const [showLogin, setShowLogin] = useState(true)
   const [showRegister, setShowRegister] = useState(false)
   const [modalShow, setModalShow] = useState(false)
+
+  const handleSubmit = (e) => {
+    setModalShow(true)
+    HandlePay.mutate(e)
+  }
 
   //Delete order
   const [idDelete, setIdDelete] = useState(null)
@@ -297,18 +322,18 @@ function Cart() {
                                         fontWeight: "bold",
                                       }}
                                     >
-                                      Toping :
+                                      Topping :
                                     </Card.Text>
-                                    {data.toppings?.map((dataToping) => (
+                                    {data.topping?.map((dataTopping) => (
                                       <Card.Text
-                                        key={dataToping?.id}
+                                        key={dataTopping?.id}
                                         className="d-flex flex-wrap"
                                         style={{
                                           fontSize: "15px",
                                           color: "#BD0707",
                                         }}
                                       >
-                                        {dataToping?.nametoping},
+                                        {dataTopping?.nametopping},
                                       </Card.Text>
                                     ))}
                                   </Stack>
@@ -316,7 +341,7 @@ function Cart() {
 
                                 <Card.Body className=" p-0 m-0">
                                   <Card.Text style={style.textRed}>
-                                    {formatIDR.format(data?.subtotal)}
+                                    {formatIDR.format(data?.total)}
                                   </Card.Text>
                                   <Button
                                     variant="light"
@@ -410,14 +435,112 @@ function Cart() {
                   </Card.Body>
                 </Col>
                 <Col sm={4} className="pt-5">
-                  <Form
+                  <Form className="m-auto mt-3 d-grid gap-4 w-100">
+                    <div className="form-check form-switch">
+                      <input
+                        className="form-check-input mb-4"
+                        type="checkbox"
+                        onChange={() => {
+                          setCheckSwitch(!checkswitch)
+                        }}
+                        role="switch"
+                        id="flexSwitchCheckChecked"
+                      />
+                      <label
+                        // label
+                        className="form-check-label"
+                        htmlFor="flexSwitchCheckChecked"
+                        style={{ color: "#bd0707" }}
+                      >
+                        Other Address
+                      </label>
+                    </div>
+                    {checkswitch === true ? (
+                      <>
+                        <Form.Control
+                          type="text"
+                          placeholder="Name"
+                          name="fullname"
+                          onChange={handleOnChange}
+                          className="mb-3"
+                          style={{
+                            borderColor: "#bd0707",
+                            borderWidth: "3px",
+                            backgroundColor: "#FFF3F7",
+                          }}
+                        />
+
+                        <Form.Control
+                          type="text"
+                          placeholder="Phone"
+                          name="phone"
+                          onChange={handleOnChange}
+                          className="mb-3"
+                          style={{
+                            borderColor: "#bd0707",
+                            borderWidth: "3px",
+                            backgroundColor: "#FFF3F7",
+                          }}
+                        />
+                        <Form.Control
+                          as="textarea"
+                          rows={4}
+                          placeholder="Address"
+                          name="address"
+                          onChange={handleOnChange}
+                          className="mb-5"
+                          style={{
+                            borderColor: "#bd0707",
+                            borderWidth: "3px",
+                            backgroundColor: "#FFF3F7",
+                            resize: "none",
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                    <Button
+                      variant="primary"
+                      onClick={(e) => handleSubmit(e)}
+                      style={{
+                        width: "100%",
+                        color: "white",
+                        fontWeight: "bold",
+                        borderColor: "#bd0707",
+                        backgroundColor: "#bd0707",
+                      }}
+                    >
+                      Pay
+                    </Button>
+                  </Form>
+                </Col>
+              </Row>
+            </Card>
+          </Container>
+          <DeleteData
+            setConfirmDelete={setConfirmDelete}
+            show={show}
+            handleClose={handleClose}
+          />
+          <ModalPopUp show={modalShow} onHide={() => setModalShow(false)} />
+        </>
+      )}
+    </>
+  )
+}
+
+export default Cart
+
+{
+  /* <Form
                     onSubmit={(e) => HandlePay.mutate(e)}
                     className="m-auto mt-3 d-grid gap-4 w-100"
                   >
                     <Form.Group className="mb-3 " controlId="name">
                       <Form.Control
                         onChange={handleOnChange}
-                        // value={DataPay.name}
+                        // value={dataPay.name}
                         name="name"
                         style={{ border: "2px solid #BD0707" }}
                         type="text"
@@ -428,7 +551,7 @@ function Cart() {
                     <Form.Group className="mb-3" controlId="email">
                       <Form.Control
                         onChange={handleOnChange}
-                        // value={DataPay.email}
+                        // value={dataPay.email}
                         name="email"
                         style={{ border: "2px solid #BD0707" }}
                         type="email"
@@ -439,7 +562,7 @@ function Cart() {
                     <Form.Group className="mb-3" controlId="phone">
                       <Form.Control
                         onChange={handleOnChange}
-                        // value={DataPay.phone}
+                        // value={dataPay.phone}
                         name="phone"
                         style={{ border: "2px solid #BD0707" }}
                         type="text"
@@ -450,7 +573,7 @@ function Cart() {
                     <Form.Group className="mb-3" controlId="poscode">
                       <Form.Control
                         onChange={handleOnChange}
-                        // value={DataPay.posCode}
+                        // value={dataPay.posCode}
                         name="poscode"
                         style={{ border: "2px solid #BD0707" }}
                         type="text"
@@ -465,7 +588,7 @@ function Cart() {
                     >
                       <Form.Control
                         onChange={handleOnChange}
-                        // value={DataPay.address}
+                        // value={dataPay.address}
                         name="address"
                         as="textarea"
                         placeholder="Address"
@@ -493,23 +616,8 @@ function Cart() {
                         onHide={() => setModalShow(false)}
                       />
                     </>
-                  </Form>
-                </Col>
-              </Row>
-            </Card>
-          </Container>
-          <DeleteData
-            setConfirmDelete={setConfirmDelete}
-            show={show}
-            handleClose={handleClose}
-          />
-        </>
-      )}
-    </>
-  )
+                  </Form> */
 }
-
-export default Cart
 
 // const navigate = useNavigate()
 
@@ -530,17 +638,17 @@ export default Cart
 //   }
 // }
 
-// const Topings = []
-// const getTopings = () => {
+// const Toppings = []
+// const getToppings = () => {
 //   if (typeof Storage === "undefined") {
 //     alert("cant store user")
 //   }
 
-//   const DataToping = JSON.parse(localStorage.getItem("DATA_TOPING"))
+//   const DataTopping = JSON.parse(localStorage.getItem("DATA_TOPING"))
 
-//   if (DataToping !== null) {
-//     for (let i = 0; i < DataToping.length; i++) {
-//       Topings.push(DataToping[i])
+//   if (DataTopping !== null) {
+//     for (let i = 0; i < DataTopping.length; i++) {
+//       Toppings.push(DataTopping[i])
 //     }
 //   }
 // }
@@ -561,7 +669,7 @@ export default Cart
 
 // getCartData()
 // getProducts()
-// getTopings()
+// getToppings()
 
 // const deleteCartItem = (cartId) => {
 //   let localData = dataCart.filter((e) => e.cartId !== cartId)
@@ -595,7 +703,7 @@ export default Cart
 // const [modalShow, setModalShow] = useState(false)
 
 // const pay = []
-// const [DataPay, setState] = useState({
+// const [dataPay, setDataPay] = useState({
 //   name: "",
 //   email: "",
 //   phone: "",
@@ -606,8 +714,8 @@ export default Cart
 // const addDataPay = JSON.parse(localStorage.getItem("DATA_PAY"))
 
 // const handleOnChange = (e) => {
-//   setState({
-//     ...DataPay,
+//   setDataPay({
+//     ...dataPay,
 //     [e.target.name]: e.target.value,
 //   })
 // }
@@ -616,13 +724,13 @@ export default Cart
 //   e.preventDefault()
 
 //   if (addDataPay === null) {
-//     pay.push(DataPay)
+//     pay.push(dataPay)
 //     localStorage.setItem("DATA_PAY", JSON.stringify(pay))
 //   } else {
 //     addDataPay.forEach((element) => {
 //       pay.push(element)
 //     })
-//     pay.push(DataPay)
+//     pay.push(dataPay)
 //     localStorage.setItem("DATA_PAY", JSON.stringify(pay))
 //   }
 // }

@@ -59,17 +59,17 @@ function UpdateToping() {
   const [preview, setPreview] = useState(null)
   const [toping, setToping] = useState({})
   const [DataToping, setDataToping] = useState({
-    nametoping: "",
+    nametopping: "",
     price: 0,
     image: "",
   })
 
   // Fetching detail toping data by id from database
   let { data: topings } = useQuery("updateTopingCache", async () => {
-    const response = await API.get("/toping/" + id)
+    const response = await API.get("/topping/" + id)
     return response.data.data
     // setDataToping({
-    //   nametoping: response.data.nametoping,
+    //   nametopping: response.data.nametopping,
     //   price: response.data.price,
     //   image: response.data.image,
     // })
@@ -81,7 +81,7 @@ function UpdateToping() {
       setPreview(topings.image)
       setDataToping({
         ...DataToping,
-        nametoping: topings.nametoping,
+        nametopping: topings.nametopping,
         price: topings.price,
       })
       setToping(topings)
@@ -122,15 +122,15 @@ function UpdateToping() {
         formData.set(
           "image",
           DataToping.image[0],
-          DataToping.image[0]?.nametoping
+          DataToping.image[0]?.nametopping
         )
       }
-      formData.set("nametoping", DataToping.nametoping)
+      formData.set("nametopping", DataToping.nametopping)
       formData.set("price", DataToping.price)
 
       // Insert toping data
       const response = await API.patch(
-        "/toping/" + topings.id,
+        "/topping/" + topings.id,
         formData,
         config
       )
@@ -159,8 +159,8 @@ function UpdateToping() {
                 <Form.Group className="mb-3 " controlId="nameToping">
                   <Form.Control
                     onChange={handleOnChange}
-                    name="nametoping"
-                    value={DataToping?.nametoping}
+                    name="nametopping"
+                    value={DataToping?.nametopping}
                     style={{
                       border: "2px solid #BD0707",
                       backgroundColor: "#E0C8C840",

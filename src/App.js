@@ -62,7 +62,7 @@ function App() {
         type: "USER_SUCCESS",
         payload,
       })
-      // console.log("ini data state", state)
+      // console.log("ini data state", payload)
       setIsLoading(false)
     } catch (error) {
       // console.log(error)
@@ -81,18 +81,18 @@ function App() {
           <Navs />
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* <Route path="/DetailProduct/:id" element={<DetailProduct />} /> */}
-            {/* <Route path="/Carts" element={<Cart />} /> */}
+            <Route path="/DetailProduct/:id" element={<DetailProduct />} />
+            <Route path="/Carts" element={<Cart />} />
+            <Route path="/Profile" element={<Profile />} />
             {/* <Route path="/Transaction" element={<Transaction />} /> */}
-            {/* <Route path="/Profile" element={<Profile />} /> */}
             {/* <Route path="/HistoryOrder" element={<HistoryOrder />} /> */}
             {/* <Route path="/Admin" element={<Income />} /> */}
             <Route path="/AddProduct" element={<AddProduct />} />
-            {/* <Route path="/AddToping" element={<AddToping />} /> */}
-            {/* <Route path="/ProductAdmin" element={<ProductAdmin />} /> */}
-            {/* <Route path="/TopingAdmin" element={<TopingAdmin />} /> */}
-            {/* <Route path="/UpdateProduct/:id" element={<UpdateProduct />} /> */}
-            {/* <Route path="/UpdateToping/:id" element={<UpdateToping />} /> */}
+            <Route path="/AddToping" element={<AddToping />} />
+            <Route path="/ProductAdmin" element={<ProductAdmin />} />
+            <Route path="/TopingAdmin" element={<TopingAdmin />} />
+            <Route path="/UpdateProduct/:id" element={<UpdateProduct />} />
+            <Route path="/UpdateToping/:id" element={<UpdateToping />} />
           </Routes>
         </>
       )}

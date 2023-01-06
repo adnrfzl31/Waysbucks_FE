@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   Alert,
   Card,
@@ -12,20 +12,32 @@ import CardHeader from "react-bootstrap/esm/CardHeader"
 import { useQuery } from "react-query"
 import { API } from "../../confiq/api"
 import Logo from "../../assets/image/Logo2.png"
+import ModalTransaction from "../../component/modal/ModalTransaction"
 // import Image1 from "../assets/image/produk1.png"
 
 function HistoryOrder() {
-  let { data: TransUser } = useQuery("HistoryChache", async () => {
-    const response = await API.get("/transaction-user")
-    return response.data.data
-  })
-  console.log("History", TransUser)
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+  const [dataHistoryOrder, setDataHistoryOrder] = useState({})
+
+  const handleHistoryOrder = (data) => {
+    setDataHistoryOrder(data)
+    handleShow()
+  }
 
   const formatIDR = new Intl.NumberFormat(undefined, {
     style: "currency",
     currency: "IDR",
     maximumFractionDigits: 0,
   })
+
+  let { data: TransUser } = useQuery("HistoryChache", async () => {
+    const response = await API.get("/transaction-user")
+    return response.data.data
+  })
+  console.log("History", TransUser)
+
   return (
     <>
       <Card className="border-0 p-2" style={{ width: "50%" }}>
@@ -41,6 +53,7 @@ function HistoryOrder() {
             {TransUser?.map((dataTransUser) => (
               <Card.Body
                 key={dataTransUser?.id}
+                onClick={() => handleHistoryOrder(dataTransUser)}
                 style={{
                   background: "#F6DADA",
                   borderRadius: "5px",
@@ -84,8 +97,8 @@ function HistoryOrder() {
                               }}
                             >
                               <b style={{ color: "#974A4A" }}>Toping</b>:
-                              {order.toping?.map((topping) => (
-                                <>{topping.nametoping},</>
+                              {order.topping?.map((topping) => (
+                                <>{topping.nametopping},</>
                               ))}
                             </Card.Text>
                             <Card.Subtitle
@@ -96,7 +109,7 @@ function HistoryOrder() {
                                 lineHeight: "2",
                               }}
                             >
-                              Price : {formatIDR.format(order.subtotal)}
+                              Price : {formatIDR.format(order.total)}
                             </Card.Subtitle>
                           </Card.Body>
                         </Stack>
@@ -165,7 +178,7 @@ function HistoryOrder() {
                               color: "#974A4A",
                             }}
                           >
-                            Total : {formatIDR.format(dataTransUser.price)}
+                            Total : {formatIDR.format(dataTransUser.total)}
                           </Card.Title>
                         </Card.Body>
                       </Card>
@@ -177,6 +190,12 @@ function HistoryOrder() {
           </Stack>
         </CardGroup>
       </Card>
+      <ModalTransaction
+        showTrans={show}
+        closeTrans={handleClose}
+        TransUser={dataHistoryOrder}
+        formatIDR={formatIDR}
+      />
     </>
   )
 }
