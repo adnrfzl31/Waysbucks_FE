@@ -3,9 +3,7 @@ import React from "react"
 import { useState } from "react"
 import { useEffect } from "react"
 import { Alert, Card, CardImg, Col, Modal, Row, Stack } from "react-bootstrap"
-// import Rupiah from "rupiah-format"
 import { API } from "../../confiq/api"
-// logo
 import Logo from "../../assets/image/Logo2.png"
 import CardHeader from "react-bootstrap/esm/CardHeader"
 
@@ -15,21 +13,6 @@ export default function ModalTransaction({
   TransUser,
   formatIDR,
 }) {
-  // const formatIDR = new Intl.NumberFormat(undefined, {
-  //   style: "currency",
-  //   currency: "IDR",
-  //   maximumFractionDigits: 0,
-  // })
-
-  // const [transaction, serTransaction] = useState([])
-
-  // useEffect(() => {
-  //   API.get("/transaction/" + id)
-  //     .then((res) => {
-  //       serTransaction(res.data.data)
-  //     })
-  //     .catch((err) => console.log("error", err))
-  // })
 
   return (
     <Modal
@@ -39,12 +22,9 @@ export default function ModalTransaction({
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      {/* {TransUser?.map((TransUser) => ( */}
       <Modal.Body>
         <Card>
           <Card.Body
-            // key={TransUser?.id}
-            // onClick={handleShow}
             style={{
               background: "#F6DADA",
               borderRadius: "5px",
@@ -182,51 +162,3 @@ export default function ModalTransaction({
     </Modal>
   )
 }
-
-// <div className="profileCard">
-//   <div className="contentCardLeft">
-//     {transaction?.carts?.map((item, index) => (
-//       <div className="mapContent" key={index}>
-//         <img
-//           src={"http://localhost:5000/uploads/" + item.product.image}
-//           alt="coffee"
-//         />
-//         <ul>
-//           <li className="profileCardTitle">{item.title}</li>
-//           <li className="profileCardDate">
-//             <strong>Monday</strong>,5 December 2022
-//           </li>
-//           <li className="profileCardToping">
-//             <strong className="inline">
-//               Toping :{" "}
-//               {item.topping.map((topping, idx) => (
-//                 <span key={idx}>{topping.title},</span>
-//               ))}
-//             </strong>
-//           </li>
-//           <li className="profileCardPrice">
-//             Price: {formatIDR(item?.subtotal)}
-//           </li>
-//         </ul>
-//       </div>
-//     ))}
-//   </div>
-//   <div
-//     className={
-//       transaction?.status === "Success"
-//         ? "contentCardRight Success"
-//         : transaction?.status === "Cancel"
-//         ? "contentCardRight Cancel"
-//         : "contentCardRight Otw"
-//     }
-//   >
-//     <img src={Logo} alt="logo" />
-//     <CardImg src="https://www.pngmart.com/files/22/QR-Code-Transparent-Isolated-Background.png" />
-//     <span>
-//       <p>{transaction?.status}</p>
-//     </span>
-//     <p className="profileSubTotal">
-//       Sub Total : {Rupiah.convert(transaction?.total)}
-//     </p>
-//   </div>
-// </div>

@@ -3,44 +3,10 @@ import { Button, Card, Col, Container, Row, Stack } from "react-bootstrap"
 import Logo from "../../assets/image/Logo2.png"
 import Barcode from "../../assets/image/Barcode.png"
 import Products from "../../assets/image/Product1.png"
-// import { BrowserRouter as Router, Routes, Route, Link  } from 'react-router-dom';
 
 const style = {
-  cardContainer: {},
-
-  card: {},
-
-  img: {},
-
   cardBody: {
     width: "70%",
-  },
-
-  col: {},
-
-  cardTitle: {},
-
-  titleToping: {},
-
-  textToping: {},
-
-  textColor: {},
-
-  date: {},
-
-  price: {},
-
-  imgLogo: {
-    // position: "absolute",
-    // top: "8%",
-    // left: "85%",
-    // justifyContent: "center"
-  },
-
-  imgBarcode: {
-    // position: "absolute",
-    // top: "40%",
-    // left: "83%",
   },
 }
 

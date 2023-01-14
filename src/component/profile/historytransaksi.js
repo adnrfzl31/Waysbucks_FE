@@ -13,7 +13,6 @@ import { useQuery } from "react-query"
 import { API } from "../../confiq/api"
 import Logo from "../../assets/image/Logo2.png"
 import ModalTransaction from "../modal/ModalTransaction"
-// import Image1 from "../assets/image/produk1.png"
 
 function HistoryOrder() {
   const [show, setShow] = useState(false)
@@ -36,7 +35,6 @@ function HistoryOrder() {
     const response = await API.get("/transaction-user")
     return response.data.data
   })
-  console.log("History", TransUser)
 
   return (
     <>

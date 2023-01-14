@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css"
+import "../../assets/css/navbar/navbar.css"
 import React, { useContext, useEffect, useState } from "react"
 import {
   Button,
@@ -9,8 +10,10 @@ import {
   Popover,
   Stack,
   Badge,
+  Offcanvas,
+  Image,
 } from "react-bootstrap"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useQuery } from "react-query"
 import { API } from "../../confiq/api"
 import { UserContext } from "../../context/UserContext"
@@ -18,11 +21,12 @@ import AddProduct from "../../assets/image/AddProduct.png"
 import AddToping from "../../assets/image/AddToping.png"
 import Basket from "../../assets/image/Basket.png"
 import Profil from "../../assets/image/Profil1.png"
-import Image from "../../assets/image/Logo1.png"
+import IconLogo from "../../assets/image/Logo1.png"
 import Logout from "../../assets/image/Logout.png"
 import User from "../../assets/image/User.png"
 import Login from "../auth/Login.js"
 import Register from "../auth/Register.js"
+import NavbarLogin from "./NavbarLogin"
 
 function DropdownUser({ Profile, logout }) {
   return (
@@ -32,38 +36,15 @@ function DropdownUser({ Profile, logout }) {
       overlay={
         <Popover id="popover-basic">
           <Popover.Body>
-            <Nav.Link
-              href="/Profile"
-              style={{
-                fontWeight: "600",
-                fontSize: "17px",
-                alignItems: "center",
-              }}
-            >
-              <img
-                alt=""
-                src={User}
-                style={{ width: "30px", marginRight: "15px" }}
-              />
+            <Nav.Link href="/Profile" className="popover.body popover.body">
+              <img alt="" src={User} className="icon-img" />
               Profile
             </Nav.Link>
           </Popover.Body>
           <hr />
           <Popover.Body>
-            <Nav.Link
-              onClick={logout}
-              style={{
-                fontWeight: "600",
-                fontSize: "17px",
-                alignItems: "center",
-              }}
-            >
-              <img
-                alt=""
-                src={Logout}
-                style={{ width: "30px", marginRight: "15px" }}
-              />{" "}
-              Logout
+            <Nav.Link onClick={logout} className="popover.body popover.body">
+              <img alt="" src={Logout} className="icon-img" /> Logout
             </Nav.Link>
           </Popover.Body>
         </Popover>
@@ -76,7 +57,6 @@ function DropdownUser({ Profile, logout }) {
       <img
         alt=""
         src={Profile?.image}
-        // src={Profil}
         className="d-inline-block align-top btn p-0 m-auto"
         style={{
           width: "60px",
@@ -98,103 +78,28 @@ function DropdownAdmin({ Profile, logout }) {
       overlay={
         <Popover id="popover-basic">
           <Popover.Body>
-            <Nav.Link
-              href="/Profile"
-              className="mt-2"
-              style={{
-                fontWeight: "600",
-                fontSize: "17px",
-                alignItems: "center",
-              }}
-            >
-              <img
-                alt=""
-                src={User}
-                style={{ width: "30px", marginRight: "15px" }}
-              />
+            <Nav.Link href="/Profile" className="popover.body mt-2">
+              <img alt="" src={User} className="icon-img" />
               Profile
             </Nav.Link>
-            <Nav.Link
-              href="/AddProduct"
-              className="mt-4"
-              style={{
-                fontWeight: "600",
-                fontSize: "17px",
-                alignItems: "center",
-              }}
-            >
-              <img
-                alt=""
-                src={AddProduct}
-                style={{ width: "30px", marginRight: "15px" }}
-              />
+            <Nav.Link href="/AddProduct" className="popover.body mt-4">
+              <img alt="" src={AddProduct} className="icon-img" />
               Add Product
             </Nav.Link>
-            <Nav.Link
-              href="/AddToping"
-              className="mt-4"
-              style={{
-                fontWeight: "600",
-                fontSize: "17px",
-                alignItems: "center",
-              }}
-            >
-              <img
-                alt=""
-                src={AddToping}
-                style={{ width: "30px", marginRight: "15px" }}
-              />{" "}
-              Add Toping
+            <Nav.Link href="/AddToping" className="popover.body mt-4">
+              <img alt="" src={AddToping} className="icon-img" /> Add Toping
             </Nav.Link>
-            <Nav.Link
-              href="/ProductAdmin"
-              className="mt-4"
-              style={{
-                fontWeight: "600",
-                fontSize: "17px",
-                alignItems: "center",
-              }}
-            >
-              <img
-                alt=""
-                src={AddProduct}
-                style={{ width: "30px", marginRight: "15px" }}
-              />{" "}
-              Product List
+            <Nav.Link href="/ProductAdmin" className="popover.body mt-4">
+              <img alt="" src={AddProduct} className="icon-img" /> Product List
             </Nav.Link>
-            <Nav.Link
-              href="/TopingAdmin"
-              className="mt-4"
-              style={{
-                fontWeight: "600",
-                fontSize: "17px",
-                alignItems: "center",
-              }}
-            >
-              <img
-                alt=""
-                src={AddToping}
-                style={{ width: "30px", marginRight: "15px" }}
-              />{" "}
-              Toping List
+            <Nav.Link href="/TopingAdmin" className="popover.body mt-4">
+              <img alt="" src={AddToping} className="icon-img" /> Toping List
             </Nav.Link>
           </Popover.Body>
           <hr />
           <Popover.Body>
-            <Nav.Link
-              style={{
-                fontWeight: "600",
-                fontSize: "17px",
-                alignItems: "center",
-              }}
-              onClick={logout}
-            >
-              <img
-                alt=""
-                src={Logout}
-                style={{ width: "30px", marginRight: "15px" }}
-              />{" "}
-              Logout
+            <Nav.Link className="popover.body" onClick={logout}>
+              <img alt="" src={Logout} className="icon-img" /> Logout
             </Nav.Link>
           </Popover.Body>
         </Popover>
@@ -203,7 +108,6 @@ function DropdownAdmin({ Profile, logout }) {
       <img
         alt=""
         src={Profile?.image}
-        // src={Profil}
         className="d-inline-block align-top btn p-0 m-auto "
         style={{
           width: "60px",
@@ -219,8 +123,7 @@ function DropdownAdmin({ Profile, logout }) {
 
 function Navs() {
   const [state, dispatch] = useContext(UserContext)
-  // //console.log("ini isi dari", state)
-
+  const [showCanvas, setShowCanvas] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
   const [showRegister, setShowRegister] = useState(false)
 
@@ -247,34 +150,41 @@ function Navs() {
       type: "LOGOUT",
     })
     navigate("/")
-    // localStorage.removeItem("VALUE_LOGIN")
-    // window.location.reload()
   }
   return (
     <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
       <Container>
-        <Navbar.Brand href="/">
-          {/* <Nav.Link href="/"> */}
-          <img
+        <Navbar.Brand as={Link} to="/">
+          <Image
             alt=""
-            src={Image}
+            src={IconLogo}
             width="50"
             height="50"
             className="d-inline-block align-top"
           />
-          {/* </Nav.Link> */}
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse
-          id="responsive-navbar-nav"
-          className="justify-content-end gap-3"
+        <Navbar.Toggle
+          aria-controls="offcanvasNavbar-expand-lg"
+          onClick={() => setShowCanvas(true)}
+        />
+        <Navbar.Offcanvas
+          id="offcanvasNavbar-expand-lg"
+          aria-labelledby="offcanvasNavbarLabel-expand-lg"
+          placement="end"
+          show={showCanvas}
+          onHide={() => setShowCanvas(false)}
+          className="offcanvas-nav"
         >
-          {/* <Nav className="me-auto"></Nav> */}
-          <Nav>
+          <Offcanvas.Header className="fw-bold justify-content-center">
+            <Offcanvas.Title id="offcanvasNavbarLabel-expand-lg">
+              <Image src={IconLogo} className="img-fluid" />
+            </Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body className="justify-content-end">
             {state.isLogin === false ? (
-              <>
+              <Nav className="gap-3 justify-content-end">
                 <Button
-                  className="px-5 me-4"
+                  className="btn btn-navbar col-12"
                   size="sm"
                   variant="outline-danger"
                   onClick={() => setShowLogin(true)}
@@ -282,7 +192,7 @@ function Navs() {
                   Login
                 </Button>
                 <Button
-                  className="px-5 "
+                  className="btn btn-navbar col-12 "
                   size="sm"
                   variant="danger"
                   onClick={() => setShowRegister(true)}
@@ -304,43 +214,17 @@ function Navs() {
                   setShowLogin={setShowLogin}
                   setShowRegister={setShowRegister}
                 />
-              </>
+              </Nav>
             ) : (
-              <>
-                {state.user.role === "admin" ? (
-                  // Navbar Admin
-                  <DropdownAdmin Profile={Profile} logout={logout} />
-                ) : (
-                  // Navbar User
-                  <Stack direction="horizontal">
-                    <Nav.Link href="/Carts" className="position-relative m-3">
-                      <img
-                        alt=""
-                        src={Basket}
-                        width="35"
-                        height="30"
-                        className="d-inline-block align-top"
-                      />
-                      {order?.length >= 1 && (
-                        <Badge
-                          // style={{ top: "10%", left: "65%" }}
-                          className="position-absolute translate-middle badge-position rounded-pill bg-danger p-1   border border-light rounded-circle"
-                        >
-                          {order?.length}
-                        </Badge>
-                      )}
-                    </Nav.Link>
-                    <DropdownUser
-                      Profile={Profile}
-                      logout={logout}
-                      // userDropdown={userDropdown} logOut={logOut}
-                    />
-                  </Stack>
-                )}
-              </>
+              <NavbarLogin
+                state={state}
+                order={order}
+                Profile={Profile}
+                logout={logout}
+              />
             )}
-          </Nav>
-        </Navbar.Collapse>
+          </Offcanvas.Body>
+        </Navbar.Offcanvas>
       </Container>
     </Navbar>
   )

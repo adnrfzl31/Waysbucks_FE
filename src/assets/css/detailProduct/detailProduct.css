@@ -1,0 +1,50 @@
+.detail-product-card {
+  width: 100%;
+  height: 500px;
+  position: relative;
+}
+
+.detail-product-img {
+  width: 100%;
+  height: 80%;
+}
+
+.detail-product-body-card {
+  width: 50%;
+}
+
+.detail-product-title-card {
+  font-size: 47px;
+  line-height: 100%;
+  text-align: Left;
+  vertical-align: Top;
+  color: #bd0707;
+}
+
+.detail-product-text-card {
+  color: #974a4a;
+}
+
+.detail-product-toping-text {
+  color: #bd0707;
+  text-align: center;
+}
+
+.detail-product-toping-img {
+  width: 25%;
+  height: auto;
+  margin-left: 40%;
+}
+
+.detail-product-toping-approve {
+  width: 20px;
+}
+
+.detail-product-badge {
+  top: 10%;
+  left: 65%;
+}
+
+.detail-product-bg-color {
+  background-color: #bd0707;
+}

@@ -4,7 +4,6 @@ import { Button, Form, Modal, Alert, Image } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { useMutation } from "react-query"
 import { API } from "../../confiq/api"
-// import { BrowserRouter as Router, Routes, Route, Link  } from 'react-router-dom';
 
 const style = {
   textLogin: {
@@ -71,9 +70,6 @@ function Register({ show, onHide, setShowLogin, setShowRegister }) {
         },
       }
 
-      // Data body
-      // const body = JSON.stringify(dataRegis)
-
       // Store data with FormData as object
       const formData = new FormData()
       formData.set("image", dataRegis.image[0], dataRegis.image[0].fullname)
@@ -83,7 +79,6 @@ function Register({ show, onHide, setShowLogin, setShowRegister }) {
 
       // Insert data user to database
       const response = await API.post("/register", formData, config)
-      //console.log(response)
       if (response.data.status === "success...") {
         const alert = (
           <Alert variant="success" className="py-1">
@@ -118,25 +113,6 @@ function Register({ show, onHide, setShowLogin, setShowRegister }) {
       console.log(error)
     }
   })
-
-  // const addDataUser = JSON.parse(localStorage.getItem("DATA_USER"))
-  // const users = []
-  // const handleOnSubmit = (e) => {
-  //   e.preventDefault()
-  //   if (addDataUser === null) {
-  //     users.push(dataRegis)
-  //     localStorage.setItem("DATA_USER", JSON.stringify(users))
-  //   } else {
-  //     for (let i = 0; i < addDataUser.length; i++) {
-  //       users.push(addDataUser[i])
-  //     }
-  //     dataRegis.id = addDataUser.length
-  //     users.push(dataRegis)
-  //     localStorage.setItem("DATA_USER", JSON.stringify(users))
-  //   }
-  //   setShowRegister(false)
-  //   setShowLogin(true)
-  // }
 
   return (
     <Modal show={show} onHide={onHide} size="md" centered>

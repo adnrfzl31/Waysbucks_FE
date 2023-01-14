@@ -6,8 +6,6 @@ import { Link, useNavigate } from "react-router-dom"
 import { UserContext } from "../../context/UserContext"
 import { API } from "../../confiq/api"
 
-// import { BrowserRouter as Router, Routes, Route, Link  } from 'react-router-dom';
-
 const style = {
   textLogin: {
     fontWeight: "900",
@@ -99,7 +97,6 @@ function Login({
         navigate("/")
         setMessage(alert)
       }
-      // console.log(response)
       setShowLogin(false)
     } catch (error) {
       const alert = (
@@ -111,25 +108,6 @@ function Login({
       // console.log(error)
     }
   })
-
-  // const users = []
-  // const LoginDataUser = JSON.parse(localStorage.getItem("DATA_USER"))
-  // const handleOnSubmit = (e) => {
-  //   e.preventDefault()
-  //   window.location.reload()
-  //   LoginDataUser.forEach((element) => {
-  //     if (
-  //       dataLogin.email === element.email &&
-  //       dataLogin.password === element.password
-  //     ) {
-  //       users.push(element)
-  //       localStorage.setItem("VALUE_LOGIN", JSON.stringify(users))
-  //       setShowLogin(false)
-  //     } else {
-  //       console.log(LoginDataUser)
-  //     }
-  //   })
-  // }
 
   return (
     <Modal show={show} onHide={onHide} size="md" centered>

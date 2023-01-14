@@ -1,0 +1,22 @@
+.icon-img {
+  width: 30px;
+  margin-right: 15px;
+}
+
+.popover.body {
+  font-weight: 600;
+  font-size: 17px;
+  align-items: center;
+}
+
+.offcanvas-nav {
+  max-width: 200px;
+  width: 30%;
+}
+
+.btn-navbar {
+  padding: 8px 0;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+}

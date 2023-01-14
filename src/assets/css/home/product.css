@@ -1,0 +1,26 @@
+.text {
+  color: #bd0707;
+}
+
+.product-card {
+  width: 16rem;
+  background-color: #f6dada;
+  padding: 10;
+  cursor: pointer;
+}
+
+.product-img {
+  height: 320px;
+  object-fit: cover;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #bd0707;
+}
+
+.price {
+  color: #974a4a;
+  font-size: 14px;
+}

@@ -7,16 +7,12 @@ import Products from "../component/home/Product"
 import Navs from "../component/navbar/Navbar"
 import Income from "./admin/Admin"
 
-// import Income from "./Admin"
-// import { BrowserRouter as Router, Routes, Route, Link  } from 'react-router-dom';
-
 const style = {
   text: {
     color: "#BD0707",
   },
 }
 function Home() {
-  // const DataUser = JSON.parse(localStorage.getItem("VALUE_LOGIN"))
   const [state] = useContext(UserContext)
 
   return (
@@ -30,9 +26,6 @@ function Home() {
           ) : (
             <Container className="my-5 w-90">
               <Jumbotron />
-              <h3 style={style.text} className="my-5">
-                Let's Order
-              </h3>
               <Products />
             </Container>
           )}
@@ -40,9 +33,6 @@ function Home() {
       ) : (
         <Container className="my-5 w-90">
           <Jumbotron />
-          <h3 style={style.text} className="my-5">
-            Let's Order
-          </h3>
           <Products />
         </Container>
       )}

@@ -9,9 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import ModalTransaction from "../../component/modal/ModalTransaction"
-// import Approve from "../../assets/image/Approve.png"
-// import Cancel from "../../assets/image/Cancel.png"
-// import Jumbotron from "../../component/Jumbotron"
 
 const style = {
   textTitle: {
@@ -68,7 +65,6 @@ function Income() {
     const response = await API.get("/transactions")
     return response.data.data
   })
-  console.log("ini data nya => ", transall)
 
   const formatIDR = new Intl.NumberFormat(undefined, {
     style: "currency",
@@ -77,10 +73,8 @@ function Income() {
   })
 
   let income = 0
-  // //console.log(transall.data.subtotal)
 
   const HandleCancel = useMutation(async (id) => {
-    //console.log("Cancel ID =>", id)
     try {
       const dataTransAll = {
         status: "cancel",
@@ -89,14 +83,12 @@ function Income() {
 
       const response = await API.patch("/transUpdate/" + id, dataTransAll)
       refetch()
-      //console.log(response)
     } catch (error) {
       console.log(error)
     }
   })
 
   const HandleAccept = useMutation(async (id) => {
-    //console.log("Accept ID =>", id)
     try {
       const dataTransAll = {
         status: "success",
@@ -104,7 +96,6 @@ function Income() {
       }
       const response = await API.patch("/transUpdate/" + id, dataTransAll)
       refetch()
-      //console.log(response)
     } catch (error) {
       console.log(error)
     }
@@ -112,7 +103,6 @@ function Income() {
 
   return (
     <Container className="mt-5">
-      {/* <Jumbotron /> */}
       <h3 style={style.textTitle} className="my-5">
         Income transaction
       </h3>
@@ -138,7 +128,6 @@ function Income() {
               number += 1
               if (element.status === "success") {
                 income += element.total
-                //console.log("income : ", element.price)
               }
 
               return (

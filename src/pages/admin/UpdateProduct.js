@@ -5,8 +5,6 @@ import { useNavigate, useParams } from "react-router"
 import { useMutation, useQuery } from "react-query"
 import { API } from "../../confiq/api"
 
-// import { BrowserRouter as Router, Routes, Route, Link  } from 'react-router-dom';
-
 const style = {
   textTitle: {
     fontWeight: "600",
@@ -39,7 +37,6 @@ const style = {
     width: "350px",
   },
 
-  // Image Product 1
   ImgLogo: {
     position: "absolute",
     width: "130px",
@@ -68,13 +65,6 @@ function UpdateProduct() {
   let { data: products } = useQuery("updateproductCache", async () => {
     const response = await API.get("/product/" + id)
     return response.data.data
-    // setDataProduct({
-    //   nameproduct: response.data.nameproduct,
-    //   price: response.data.price,
-    //   image: response.data.image,
-    // })
-    // //console.log(response)
-    // setProduct(response.data)
   })
 
   useEffect(() => {
@@ -100,7 +90,6 @@ function UpdateProduct() {
     if (e.target.type === "file") {
       let url = URL.createObjectURL(e.target.files[0])
       setPreview(url)
-      // setPhotoProduct(<p className="txt-black">{url}</p>)
     }
   }
 
@@ -110,10 +99,8 @@ function UpdateProduct() {
 
       // Configuration
       const config = {
-        // method: "PATCH",
         headers: {
           "Content-type": "multipart/form-data",
-          // Authorization: "Basic " + localStorage.token,
         },
       }
 
@@ -135,7 +122,6 @@ function UpdateProduct() {
         formData,
         config
       )
-      //console.log(response.data)
 
       navigate("/ProductAdmin")
     } catch (error) {
@@ -187,7 +173,6 @@ function UpdateProduct() {
                   <Form.Control
                     onChange={handleOnChange}
                     name="image"
-                    // value={DataProduct?.image}
                     style={{
                       border: "2px solid #BD0707",
                       backgroundColor: "#E0C8C840",
@@ -200,7 +185,6 @@ function UpdateProduct() {
                   variant="outline-light"
                   style={style.bgColor}
                   type="submit"
-                  // onClick={() => setPopUp(true)}
                 >
                   Add Product
                 </Button>

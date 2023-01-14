@@ -7,9 +7,7 @@ import Navs from "./component/navbar/Navbar.js"
 import Home from "./pages/Home.js"
 import Cart from "./pages/user/Cart.js"
 import DetailProduct from "./pages/user/DetailProduct.js"
-// import HistoryOrder from "./pages/user/historytransaksi.js"
 import Profile from "./pages/user/Profile.js"
-// import Transaction from "./component/profile/Transaction.js"
 import Income from "./pages/admin/Admin.js"
 import AddProduct from "./pages/admin/AddProduct.js"
 import ProductAdmin from "./pages/admin/ProdutAdmin.js"
@@ -17,6 +15,7 @@ import UpdateProduct from "./pages/admin/UpdateProduct.js"
 import AddToping from "./pages/admin/AddToping.js"
 import TopingAdmin from "./pages/admin/TopingAdmin.js"
 import UpdateToping from "./pages/admin/UpdateToping.js"
+import LoadingPages from "./component/loadingPages/LoadingPages.js"
 
 if (localStorage.token) {
   setAuthToken(localStorage.token)
@@ -50,8 +49,6 @@ function App() {
         })
       }
 
-      // console.log("response check auth", response)
-
       // Get user data
       let payload = response.data.data
       // Get token from local storage
@@ -62,7 +59,6 @@ function App() {
         type: "USER_SUCCESS",
         payload,
       })
-      // console.log("ini data state", payload)
       setIsLoading(false)
     } catch (error) {
       // console.log(error)
@@ -76,7 +72,9 @@ function App() {
 
   return (
     <>
-      {isLoading ? null : (
+      {isLoading ? (
+        <LoadingPages />
+      ) : (
         <>
           <Navs />
           <Routes>

@@ -5,8 +5,6 @@ import { useMutation } from "react-query"
 import { API } from "../../confiq/api"
 import ModalPopUpToping from "../../component/popup/PopUpToping"
 
-// import { BrowserRouter as Router, Routes, Route, Link  } from 'react-router-dom';
-
 const style = {
   textTitle: {
     fontWeight: "600",
@@ -59,7 +57,6 @@ function AddToping() {
     if (e.target.type === "file") {
       let url = URL.createObjectURL(e.target.files[0])
       setPreview(url)
-      // setPhotoProduct(<p className="txt-black">{url}</p>)
     }
   }
 
@@ -82,7 +79,6 @@ function AddToping() {
 
       // Insert product data
       const response = await API.post("/topping", formData, config)
-      //console.log(response)
 
       // navigate("/add-product")
     } catch (error) {

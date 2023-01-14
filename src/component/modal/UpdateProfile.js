@@ -7,10 +7,6 @@ import { API } from "../../confiq/api"
 import { UserContext } from "../../context/UserContext"
 
 const style = {
-  // bg: {
-  //   background: "#161616",
-  // },
-
   header: {
     fontWeight: "900",
     fontSize: "30px",
@@ -26,7 +22,6 @@ const style = {
   form: {
     backgroundColor: "#FFF3F7",
     border: "2px solid #bd0707",
-    // color: "white",
     color: "#b9b9b9",
   },
 
@@ -86,7 +81,6 @@ function FormProfile({ show, onHide, setProfileShow }) {
     if (e.target.type === "file") {
       let url = URL.createObjectURL(e.target.files[0])
       setPreview(url)
-      // setPhotoProduct(<p className="txt-black">{url}</p>)
     }
   }
 
@@ -100,7 +94,6 @@ function FormProfile({ show, onHide, setProfileShow }) {
         },
       }
 
-      // const body = JSON.stringify(dataProfile)
       const formData = new FormData()
       formData.set("fullname", dataProfile.fullname)
       formData.set("phone", dataProfile.phone)

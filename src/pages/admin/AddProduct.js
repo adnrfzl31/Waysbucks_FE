@@ -5,8 +5,6 @@ import { useMutation } from "react-query"
 import { API } from "../../confiq/api"
 import ModalPopUpProduct from "../../component/popup/PopUpProduct"
 
-// import { BrowserRouter as Router, Routes, Route, Link  } from 'react-router-dom';
-
 const style = {
   textTitle: {
     fontWeight: "600",
@@ -39,7 +37,6 @@ const style = {
     width: "350px",
   },
 
-  // Image Product 1
   ImgLogo: {
     position: "absolute",
     width: "130px",
@@ -50,8 +47,6 @@ const style = {
 }
 
 function AddProduct() {
-  // const [popUp, setPopUp] = React.useState(false)
-  // const [photoProduct, setPhotoProduct] = React.useState(<p>Image Product</p>)
   const [preview, setPreview] = useState(null)
   const [DataProduct, setDataProduct] = useState({
     nameproduct: "",
@@ -59,12 +54,7 @@ function AddProduct() {
     image: "",
   })
 
-  // const handleOnChange = (e) => {
-  //   setState({
-  //     ...DataProduct,
-  //     [e.target.name]: e.target.value,
-  //   })
-  // }
+ 
 
   const handleOnChange = (e) => {
     setDataProduct({
@@ -77,7 +67,6 @@ function AddProduct() {
     if (e.target.type === "file") {
       let url = URL.createObjectURL(e.target.files[0])
       setPreview(url)
-      // setPhotoProduct(<p className="txt-black">{url}</p>)
     }
   }
 
@@ -100,7 +89,6 @@ function AddProduct() {
 
       // Insert product data
       const response = await API.post("/product", formData, config)
-      //console.log(response)
 
       // navigate("/add-product")
     } catch (error) {

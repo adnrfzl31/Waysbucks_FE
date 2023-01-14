@@ -5,8 +5,6 @@ import { useNavigate, useParams } from "react-router"
 import { useMutation, useQuery } from "react-query"
 import { API } from "../../confiq/api"
 
-// import { BrowserRouter as Router, Routes, Route, Link  } from 'react-router-dom';
-
 const style = {
   textTitle: {
     fontWeight: "600",
@@ -39,7 +37,6 @@ const style = {
     width: "350px",
   },
 
-  // Image Toping 1
   ImgLogo: {
     position: "absolute",
     width: "130px",
@@ -68,12 +65,6 @@ function UpdateToping() {
   let { data: topings } = useQuery("updateTopingCache", async () => {
     const response = await API.get("/topping/" + id)
     return response.data.data
-    // setDataToping({
-    //   nametopping: response.data.nametopping,
-    //   price: response.data.price,
-    //   image: response.data.image,
-    // })
-    // setToping(response.data)
   })
 
   useEffect(() => {
@@ -99,7 +90,6 @@ function UpdateToping() {
     if (e.target.type === "file") {
       let url = URL.createObjectURL(e.target.files[0])
       setPreview(url)
-      // setPhotoToping(<p className="txt-black">{url}</p>)
     }
   }
 
@@ -109,10 +99,8 @@ function UpdateToping() {
 
       // Configuration
       const config = {
-        // method: "PATCH",
         headers: {
           "Content-type": "multipart/form-data",
-          // Authorization: "Basic " + localStorage.token,
         },
       }
 
@@ -134,7 +122,6 @@ function UpdateToping() {
         formData,
         config
       )
-      //console.log(response.data)
 
       navigate("/TopingAdmin")
     } catch (error) {
@@ -186,7 +173,6 @@ function UpdateToping() {
                   <Form.Control
                     onChange={handleOnChange}
                     name="image"
-                    // value={DataToping?.image}
                     style={{
                       border: "2px solid #BD0707",
                       backgroundColor: "#E0C8C840",
@@ -199,7 +185,6 @@ function UpdateToping() {
                   variant="outline-light"
                   style={style.bgColor}
                   type="submit"
-                  // onClick={() => setPopUp(true)}
                 >
                   Add Toping
                 </Button>
@@ -213,13 +198,6 @@ function UpdateToping() {
               alt=""
               style={style.ImgToping}
             />
-            // ) : (
-            //   <Card.Img
-            //     variant="top"
-            //     src={URL.createObjectURL(preview[0])}
-            //     alt=""
-            //     style={style.ImgToping}
-            //   />
           )}
         </Row>
       </Card>
